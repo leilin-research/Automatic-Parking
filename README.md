@@ -56,3 +56,5 @@ Then run the demo
 cd ~/parking/q_learning/gazebo_sim/demo
 python agent.py
 ```
+
+A [presentation report](https://github.com/CTTC/Automatic-Parking/blob/master/report/automatic_parking_report.pdf) is available.
