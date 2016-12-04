@@ -1,0 +1,23 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{def} \PYG{n+nf}{update\PYGZus{}q\PYGZus{}values}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{prev\PYGZus{}state}\PYG{p}{,} \PYG{n}{prev\PYGZus{}action}\PYG{p}{,} \PYG{n}{prev\PYGZus{}reward}\PYG{p}{,} \PYG{n}{max\PYGZus{}q\PYGZus{}value}\PYG{p}{):}
+        \PYG{n}{old\PYGZus{}q\PYGZus{}value} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Q\PYGZus{}values}\PYG{o}{.}\PYG{n}{get}\PYG{p}{((}\PYG{n}{prev\PYGZus{}state}\PYG{p}{,} \PYG{n}{prev\PYGZus{}action}\PYG{p}{),} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{default\PYGZus{}q}\PYG{p}{)}
+        \PYG{n}{new\PYGZus{}q\PYGZus{}value} \PYG{o}{=} \PYG{n}{old\PYGZus{}q\PYGZus{}value} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{learning\PYGZus{}rate} \PYG{o}{*} \PYG{p}{(}\PYG{n}{prev\PYGZus{}reward} \PYG{o}{+} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{gamma} \PYG{o}{*} \PYG{n}{max\PYGZus{}q\PYGZus{}value}
+                      \PYG{o}{\PYGZhy{}} \PYG{n}{old\PYGZus{}q\PYGZus{}value}\PYG{p}{)}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Q\PYGZus{}values}\PYG{p}{[(}\PYG{n}{prev\PYGZus{}state}\PYG{p}{,} \PYG{n}{prev\PYGZus{}action}\PYG{p}{)]} \PYG{o}{=} \PYG{n}{new\PYGZus{}q\PYGZus{}value}
+
+
+
+
+    \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}maximum\PYGZus{}q\PYGZus{}value}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{state}\PYG{p}{):}
+        \PYG{n}{q\PYGZus{}value\PYGZus{}selected} \PYG{o}{=} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{10000000}
+        \PYG{k}{for} \PYG{n}{action} \PYG{o+ow}{in} \PYG{n}{car\PYGZus{}sim\PYGZus{}env}\PYG{o}{.}\PYG{n}{valid\PYGZus{}actions}\PYG{p}{:}
+            \PYG{n}{q\PYGZus{}value} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{get\PYGZus{}q\PYGZus{}value}\PYG{p}{(}\PYG{n}{state}\PYG{p}{,} \PYG{n}{action}\PYG{p}{)}
+            \PYG{k}{if} \PYG{n}{q\PYGZus{}value} \PYG{o}{\PYGZgt{}} \PYG{n}{q\PYGZus{}value\PYGZus{}selected}\PYG{p}{:}
+                \PYG{n}{q\PYGZus{}value\PYGZus{}selected} \PYG{o}{=} \PYG{n}{q\PYGZus{}value}
+                \PYG{n}{action\PYGZus{}selected} \PYG{o}{=} \PYG{n}{action}
+            \PYG{k}{elif} \PYG{n}{q\PYGZus{}value} \PYG{o}{==} \PYG{n}{q\PYGZus{}value\PYGZus{}selected}\PYG{p}{:}
+            \PYG{c+c1}{\PYGZsh{} if there are two actions that lead to same q value,}
+            \PYG{c+c1}{\PYGZsh{} we need to randomly choose one between them}
+                \PYG{n}{action\PYGZus{}selected} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{([}\PYG{n}{action\PYGZus{}selected}\PYG{p}{,} \PYG{n}{action}\PYG{p}{])}
+        \PYG{k}{return} \PYG{n}{action\PYGZus{}selected}\PYG{p}{,} \PYG{n}{q\PYGZus{}value\PYGZus{}selected}
+\end{Verbatim}

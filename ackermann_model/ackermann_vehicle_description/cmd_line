@@ -1,0 +1,1 @@
+rostopic pub /ackermann_vehicle/ackermann_cmd ackermann_msgs/AckermannDriveStamped -r 100 '{header: {seq: 0, stamp: {secs: 0, nsecs: 0}, frame_id: ""}, drive: {steering_angle: 2, steering_angle_velocity: 0, speed: 0.1, acceleration: 0, jerk: 0}}'

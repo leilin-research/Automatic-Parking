@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{def} \PYG{n+nf}{sense}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{n}{agent\PYGZus{}pose} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)} \PYG{c+c1}{\PYGZsh{}[x, y, theta]}
+        \PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{agent\PYGZus{}pos}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
+        \PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{agent\PYGZus{}pos}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}
+        \PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{arctan2}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{agent\PYGZus{}ori}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{],} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{agent\PYGZus{}ori}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{])} \PYG{o}{*} \PYG{l+m+mi}{2}
+        \PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{=} \PYG{p}{(}\PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{+} \PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{p}{)} \PYG{o}{\PYGZpc{}} \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{*} \PYG{n}{np}\PYG{o}{.}\PYG{n}{pi}\PYG{p}{)}
+        \PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{floor}\PYG{p}{((}\PYG{n}{np}\PYG{o}{.}\PYG{n}{floor}\PYG{p}{(}\PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]} \PYG{o}{/} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{grid\PYGZus{}width} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{))} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{*}
+                        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{grid\PYGZus{}width}
+        \PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{floor}\PYG{p}{((}\PYG{n}{np}\PYG{o}{.}\PYG{n}{floor}\PYG{p}{(}\PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]} \PYG{o}{/} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{grid\PYGZus{}width} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{))} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{*}
+                        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{grid\PYGZus{}width}
+        \PYG{n}{idx} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{floor}\PYG{p}{(}\PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{/} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{angle\PYGZus{}blockwidth} \PYG{o}{/} \PYG{l+m+mi}{2}\PYG{p}{))}
+        \PYG{k}{if} \PYG{n}{idx} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{2} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{n}{idx} \PYG{o}{=} \PYG{n}{idx} \PYG{o}{/} \PYG{l+m+mi}{2}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{idx} \PYG{o}{=} \PYG{p}{(}\PYG{n}{idx} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{/} \PYG{l+m+mi}{2}
+        \PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{]} \PYG{o}{=} \PYG{n}{idx} \PYG{o}{\PYGZpc{}} \PYG{l+m+mi}{16}
+        \PYG{c+c1}{\PYGZsh{} agent\PYGZus{}pose[2] represents the region the car\PYGZsq{}s angle belongs to}
+        \PYG{c+c1}{\PYGZsh{} [\PYGZhy{}11.25, 11.25) is region 0}
+        \PYG{c+c1}{\PYGZsh{} [11.25, 33.75) is region 1}
+        \PYG{c+c1}{\PYGZsh{} ...}
+        \PYG{c+c1}{\PYGZsh{} [\PYGZhy{}33.75, \PYGZhy{}11.25) is region 15}
+        \PYG{k}{return} \PYG{n}{agent\PYGZus{}pose}
+\end{Verbatim}

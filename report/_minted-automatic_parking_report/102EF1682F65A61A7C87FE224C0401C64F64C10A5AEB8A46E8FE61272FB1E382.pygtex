@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{def} \PYG{n+nf}{step}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{c+c1}{\PYGZsh{} Update agent}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{agent}\PYG{o}{.}\PYG{n}{update}\PYG{p}{()}
+
+        \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{done}\PYG{p}{:}
+            \PYG{k}{return}
+
+        \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{agent} \PYG{o+ow}{is} \PYG{o+ow}{not} \PYG{n+nb+bp}{None}\PYG{p}{:}
+            \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{t} \PYG{o}{\PYGZgt{}=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{hard\PYGZus{}time\PYGZus{}limit}\PYG{p}{:}
+                \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}Environment.step(): Primary agent hit hard time limit! Trial aborted.\PYGZdq{}}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{done} \PYG{o}{=} \PYG{n+nb+bp}{True}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{num\PYGZus{}hit\PYGZus{}time\PYGZus{}limit} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+            \PYG{k}{elif} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{enforce\PYGZus{}deadline} \PYG{o+ow}{and} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{t} \PYG{o}{\PYGZgt{}=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{deadline}\PYG{p}{:}
+                \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}Environment.step(): Primary agent ran out of time! Trial aborted.\PYGZdq{}}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{done} \PYG{o}{=} \PYG{n+nb+bp}{True}
+                \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{num\PYGZus{}out\PYGZus{}of\PYGZus{}time} \PYG{o}{+=} \PYG{l+m+mi}{1}
+
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{t} \PYG{o}{+=} \PYG{l+m+mi}{1}
+\end{Verbatim}

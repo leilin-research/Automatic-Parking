@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}action}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{state}\PYG{p}{):}
+        \PYG{k}{if} \PYG{n}{random}\PYG{o}{.}\PYG{n}{random}\PYG{p}{()} \PYG{o}{\PYGZlt{}} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{epsilon}\PYG{p}{:}
+            \PYG{n}{action\PYGZus{}selected} \PYG{o}{=} \PYG{n}{random}\PYG{o}{.}\PYG{n}{choice}\PYG{p}{(}\PYG{n}{car\PYGZus{}sim\PYGZus{}env}\PYG{o}{.}\PYG{n}{valid\PYGZus{}actions}\PYG{p}{)}
+            \PYG{n}{q\PYGZus{}value\PYGZus{}selected} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{get\PYGZus{}q\PYGZus{}value}\PYG{p}{(}\PYG{n}{state}\PYG{p}{,} \PYG{n}{action\PYGZus{}selected}\PYG{p}{)}
+        \PYG{k}{else}\PYG{p}{:}
+            \PYG{n}{action\PYGZus{}selected}\PYG{p}{,} \PYG{n}{q\PYGZus{}value\PYGZus{}selected} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{get\PYGZus{}maximum\PYGZus{}q\PYGZus{}value}\PYG{p}{(}\PYG{n}{state}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{action\PYGZus{}selected}\PYG{p}{,} \PYG{n}{q\PYGZus{}value\PYGZus{}selected}
+
+
+
+
+
+    \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}q\PYGZus{}value}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{state}\PYG{p}{,} \PYG{n}{action}\PYG{p}{):}
+        \PYG{k}{return} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{Q\PYGZus{}values}\PYG{o}{.}\PYG{n}{get}\PYG{p}{((}\PYG{n}{state}\PYG{p}{,}\PYG{n}{action}\PYG{p}{),} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{default\PYGZus{}q}\PYG{p}{)}
+\end{Verbatim}

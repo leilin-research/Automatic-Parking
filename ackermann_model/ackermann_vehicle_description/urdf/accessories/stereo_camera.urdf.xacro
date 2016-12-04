@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<!--
+Copyright (c) 2013, Goncalo Cabrita, ISR University of Coimbra
+Copyright (c) 2014, Clearpath Robotics
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of Clearpath Robotics nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="stereo_camera">
+
+  <xacro:macro name="stereo_camera" params="prefix:=basler">
+    <!-- Create stereo_basler model -->
+    <link name="stereo_${prefix}">
+         <visual>
+           <origin xyz="0 -0.015 -0.015"
+                   rpy="${M_PI/2} 0 ${M_PI}"/>
+           <geometry>
+               <mesh filename="package://ackermann_vehicle_description/urdf/meshes/basler.stl"/>
+           </geometry>
+           <material name="chassis_mat"/>
+         </visual>
+    </link>
+
+  <joint name="${prefix}_basler_l_to_basler_r" type="fixed">
+    <parent link="stereo_${prefix}"/>
+    <child link="${prefix}_basler_r"/>
+  </joint>
+
+   <link name="${prefix}_basler_r">
+    <visual>
+      <origin xyz="0 -${BASE_LINE+0.015} -0.015"
+              rpy="${M_PI/2} 0 ${M_PI}"/>
+      <geometry>
+          <mesh filename="package://ackermann_vehicle_description/urdf/meshes/basler.stl"/>
+      </geometry>
+      <material name="chassis_mat"/>
+    </visual>
+  </link>
+
+
+
+  <!--optical position parameter-->
+  <joint name="${prefix}_optical_joint" type="fixed">
+    <origin xyz="${OPTICAL_X} ${OPTICAL_Y} ${OPTICAL_Z}" rpy="${OPTICAL_A} ${OPTICAL_B} ${OPTICAL_C}"/>
+    <parent link="stereo_${prefix}"/>
+    <child link="${prefix}_frame_optical"/>
+  </joint>
+
+  <link name="${prefix}_frame_optical"/>
+
+  <!--camera sensor parameter-->
+  <gazebo reference="${prefix}_frame_optical">
+    <sensor type="multicamera" name="${prefix}_stereo_camera">
+      <update_rate>${CAMERA_RATE}</update_rate>
+      <camera name="left">
+        <pose>0 0 0 0 0 0</pose>
+        <!--pose>0 0.155 0 0 0 0</pose-->
+        <horizontal_fov>1.57079633</horizontal_fov>
+        <image>
+          <width>${PIXEL_WIDTH}</width>
+          <height>${PIXEL_HEIGHT}</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+
+      <camera name="right">
+        <pose>0 -${BASE_LINE} 0 0 0 0</pose>
+        <!--pose>0 0.548 0 3.14 0 0</pose-->
+        <horizontal_fov>1.57079633</horizontal_fov>
+        <image>
+          <width>${PIXEL_WIDTH}</width>
+          <height>${PIXEL_HEIGHT}</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+
+      <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <!--cameraName>multisense_sl/camera</cameraName-->
+        <cameraName>multi/camera/${prefix}</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>${prefix}_frame_optical</frameName>
+        <!--<rightFrameName>${prefix}_frame_optical</rightFrameName>-->
+        <foclLength>320.000101</foclLength>
+        <hackBaseline>${BASE_LINE}</hackBaseline>
+        <distortionK1>${CAMERA_DISTORTION_K1}</distortionK1>
+        <distortionK2>${CAMERA_DISTORTION_K2}</distortionK2>
+        <distortionK3>${CAMERA_DISTORTION_K3}</distortionK3>
+        <distortionT1>${CAMERA_DISTORTION_T1}</distortionT1>
+        <distortionT2>${CAMERA_DISTORTION_T2}</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+
+  </xacro:macro>
+</robot>

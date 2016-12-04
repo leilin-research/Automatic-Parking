@@ -1,0 +1,10 @@
+Package: ros-indigo-ackermann-drive-teleop
+Version: 0.9.2-0trusty-20160111-151344-0800
+Architecture: amd64
+Maintainer: Wu Hua <wuh@slxrobot.com>
+Installed-Size: 348
+Depends: libboost-system1.54.0, libboost-thread1.54.0, libc6 (>= 2.14), libconsole-bridge0.2, libgcc1 (>= 1:4.1.1), libstdc++6 (>= 4.6), liburdfdom-model0.2, ros-indigo-controller-interface, ros-indigo-nav-msgs, ros-indigo-realtime-tools, ros-indigo-tf, ros-indigo-urdf
+Section: misc
+Priority: extra
+Homepage: https://github.com/ros-controls/ros_controllers/wiki
+Description: Controller for a ackermann drive mobile base.

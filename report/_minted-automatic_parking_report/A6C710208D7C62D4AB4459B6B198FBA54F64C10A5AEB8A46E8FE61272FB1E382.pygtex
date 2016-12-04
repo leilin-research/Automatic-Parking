@@ -1,0 +1,31 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{def} \PYG{n+nf}{update}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{n}{agent\PYGZus{}pose} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{env}\PYG{o}{.}\PYG{n}{sense}\PYG{p}{()}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{state} \PYG{o}{=} \PYG{n}{states}\PYG{p}{(}\PYG{n}{x} \PYG{o}{=} \PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{y} \PYG{o}{=} \PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{theta} \PYG{o}{=} \PYG{n}{agent\PYGZus{}pose}\PYG{p}{[}\PYG{l+m+mi}{2}\PYG{p}{])}
+
+        \PYG{n}{step} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{env}\PYG{o}{.}\PYG{n}{get\PYGZus{}steps}\PYG{p}{()}
+        \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{env}\PYG{o}{.}\PYG{n}{enforce\PYGZus{}deadline}\PYG{p}{:}
+            \PYG{n}{deadline} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{env}\PYG{o}{.}\PYG{n}{get\PYGZus{}deadline}\PYG{p}{()}
+
+        \PYG{c+c1}{\PYGZsh{} Select action according to the policy}
+        \PYG{n}{action}\PYG{p}{,} \PYG{n}{max\PYGZus{}q\PYGZus{}value} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{get\PYGZus{}action}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{state}\PYG{p}{)}
+
+        \PYG{c+c1}{\PYGZsh{} Execute action and get reward}
+        \PYG{n}{next\PYGZus{}agent\PYGZus{}pose}\PYG{p}{,}\PYG{n}{reward} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{env}\PYG{o}{.}\PYG{n}{act}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{action}\PYG{p}{)}
+
+        \PYG{c+c1}{\PYGZsh{} Learn policy based on state, action, reward}
+        \PYG{k}{if} \PYG{o+ow}{not} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{test}\PYG{p}{:}
+            \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{prev\PYGZus{}action} \PYG{o}{!=} \PYG{n+nb+bp}{None}\PYG{p}{:}
+                    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{update\PYGZus{}q\PYGZus{}values}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{prev\PYGZus{}state}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{prev\PYGZus{}action}\PYG{p}{,}
+                                         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{prev\PYGZus{}reward}\PYG{p}{,} \PYG{n}{max\PYGZus{}q\PYGZus{}value}\PYG{p}{)}
+
+            \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{env}\PYG{o}{.}\PYG{n}{enforce\PYGZus{}deadline}\PYG{p}{:}
+                \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}LearningAgent.update(): step = \PYGZob{}\PYGZcb{}, deadline = \PYGZob{}\PYGZcb{},}
+                       \PYG{n}{state} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{},} \PYG{n}{action} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{},} \PYG{n}{reward} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}.format(step, deadline,self.state,}
+                       \PYG{n}{action}\PYG{p}{,} \PYG{n}{reward}\PYG{p}{)}
+            \PYG{k}{else}\PYG{p}{:}
+                \PYG{k}{print} \PYG{l+s+s2}{\PYGZdq{}LearningAgent.update(): step = \PYGZob{}\PYGZcb{}, state = \PYGZob{}\PYGZcb{},}
+                       \PYG{n}{action} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{},} \PYG{n}{reward} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}.format(step, self.state, action, reward)}
+
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{save\PYGZus{}state}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{state}\PYG{p}{,} \PYG{n}{action}\PYG{p}{,} \PYG{n}{reward}\PYG{p}{)}
+\end{Verbatim}

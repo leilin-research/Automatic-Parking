@@ -1,0 +1,37 @@
+\frametitle{Auomatic Parking Environment Source Code}
+\usemintedstyle{colorful}
+\tiny{
+\begin{minted}{python}
+    def act(self, agent, action):
+        self.set_agent_velocity(self.valid_actions_dict[action])
+        tiem.sleep(self.step_length / self.speed)
+        self.set_agent_velocity(np.array([0,0]))
+        reward = 0.0
+
+        agent_pose = self.sense()
+
+        if self.hit_wall_check(agent_pose):
+            self.hit_wall_times += 1
+            self.done = True
+            reward = -20.0
+
+        elif self.reach_terminal(agent_pose):
+            if self.t < self.hard_time_limit and self.t < self.deadline:
+                reward = 40.0
+                self.done = True
+                self.succ_times += 1
+                print '----------------------------------------------------------------------'
+                print '----------------------------------------------------------------------'
+                print '----------------------------------------------------------------------'
+                print '----------------------------------------------------------------------'
+                print "Environment.act(): Agent has reached destination!"
+
+
+        elif self.fixed_car_movement_check():
+            self.hit_car_times += 1
+            self.done = True
+            reward = -5.0
+
+        return agent_pose, reward
+\end{minted}
+}

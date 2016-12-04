@@ -1,0 +1,10 @@
+<launch>
+  <arg name="max_speed" default="0.2"/>
+  <arg name="max_angle" default="0.7"/>
+  <!-- Launch key_node that publishes Keyboard messages -->
+  <node name="key" type="key_node" pkg="key"/>
+
+  <!-- Launch ackermann_drive_keyop to teleoperate robots with ackermann steering -->
+  <node name="ackermann_drive_keyop" type="ackermann_drive_keyop.py" pkg="ackermann_drive_teleop" output='screen' args="$(arg max_speed) $(arg max_angle)"/>
+</launch>
+

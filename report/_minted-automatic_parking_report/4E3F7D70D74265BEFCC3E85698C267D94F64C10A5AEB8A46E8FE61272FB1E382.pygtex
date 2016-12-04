@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k}{def} \PYG{n+nf}{reset}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{done} \PYG{o}{=} \PYG{n+nb+bp}{False}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{t} \PYG{o}{=} \PYG{l+m+mi}{0}
+
+        \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{z}\PYG{p}{,} \PYG{n}{theta} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{generate\PYGZus{}agent\PYGZus{}pose}\PYG{p}{()}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{reset\PYGZus{}world}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{y}\PYG{p}{,}\PYG{n}{theta}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{enforce\PYGZus{}deadline}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{deadline} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{cal\PYGZus{}deadline}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{)}
+        \PYG{k}{print} \PYG{l+s+s1}{\PYGZsq{}   agent starting pose:\PYGZsq{}}\PYG{p}{,} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{,} \PYG{n}{theta}
+\end{Verbatim}
