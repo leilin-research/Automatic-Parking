@@ -47,6 +47,11 @@ python agent.py
 ```
 
 ### Demo in Gazebo
+Start running the agent in Gazebo first:
+```bash
+roslaunch ackermann_vehicle_gazebo ackermann_vehicle.launch
+```
+Then run the demo
 ```
 cd ~/parking/q_learning/gazebo_sim/demo
 python agent.py
